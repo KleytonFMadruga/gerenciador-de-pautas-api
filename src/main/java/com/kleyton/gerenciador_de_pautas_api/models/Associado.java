@@ -10,15 +10,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name = "ASSOCIADOS")
+@NoArgsConstructor
 public class Associado {
 
 	@Id
 	@Getter
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Long idAssociado;
+	private Long id;
 
 	@OneToMany(mappedBy = "associado", fetch = FetchType.LAZY)
 	private List<Voto> pautasVotadas;
@@ -29,6 +31,7 @@ public class Associado {
 	private String nome;
 
 	@Getter
+	@Setter
 	@Column(nullable = false, unique = true)
 	private String cpf;
 
