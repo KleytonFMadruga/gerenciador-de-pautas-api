@@ -1,10 +1,10 @@
 package com.kleyton.gerenciador_de_pautas_api.models;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,19 +19,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "REUNIOES")
-public class Reuniao implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Reuniao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idReuniao;
 
-	@OneToMany(mappedBy = "reuniao")
+	@OneToMany(mappedBy = "reuniao", fetch = FetchType.LAZY)
 	private List<Pauta> pautas;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date data;
+	private LocalDateTime dataHora;
 
 	private String tema;
+
+	public Reuniao(LocalDateTime dataHora, String tema, List<Pauta> pautas) {
+		this.dataHora = dataHora;
+		this.tema = tema;
+		this.pautas = pautas;
+	}
 
 }
