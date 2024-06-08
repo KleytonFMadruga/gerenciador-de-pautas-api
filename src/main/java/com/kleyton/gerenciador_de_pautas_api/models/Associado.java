@@ -14,11 +14,6 @@ import lombok.Setter;
 
 @Entity(name = "ASSOCIADOS")
 public class Associado {
-	public Associado(String nome, String cpf) {
-		super();
-		this.nome = nome;
-		this.cpf = cpf;
-	}
 
 	@Id
 	@Getter
@@ -36,5 +31,11 @@ public class Associado {
 	@Getter
 	@Column(nullable = false, unique = true)
 	private String cpf;
+
+	public Associado(String nome, String cpf) {
+		super();
+		this.nome = nome;
+		this.cpf = cpf;
+	}
 
 }

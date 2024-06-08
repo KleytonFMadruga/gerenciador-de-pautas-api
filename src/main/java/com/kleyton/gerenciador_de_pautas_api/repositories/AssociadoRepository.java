@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.kleyton.gerenciador_de_pautas_api.models.Associado;
 
 @Repository
-public interface AssociadoRepository extends JpaRepository<Associado, Integer> {
+public interface AssociadoRepository extends JpaRepository<Associado, Long> {
 
 }
