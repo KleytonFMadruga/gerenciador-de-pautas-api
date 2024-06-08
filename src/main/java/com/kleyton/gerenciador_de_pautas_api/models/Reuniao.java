@@ -39,4 +39,7 @@ public class Reuniao {
 		this.pautas = pautas;
 	}
 
+	public Reuniao() {
+	}
+
 }

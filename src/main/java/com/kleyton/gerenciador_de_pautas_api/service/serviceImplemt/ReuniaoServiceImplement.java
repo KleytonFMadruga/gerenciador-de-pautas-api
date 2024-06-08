@@ -1,5 +1,7 @@
 package com.kleyton.gerenciador_de_pautas_api.service.serviceImplemt;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +28,9 @@ public class ReuniaoServiceImplement implements ReuniaoService {
 			throw new RuntimeException("Erro ao cadastrar reunião: " + e.getMessage());
 		}
 
+	}
+
+	public List<Reuniao> listarReunioes() {
+		return reuniaoRepository.findAll();
 	}
 }
