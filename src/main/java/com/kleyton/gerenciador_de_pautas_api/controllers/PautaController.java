@@ -1,6 +1,9 @@
 package com.kleyton.gerenciador_de_pautas_api.controllers;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,4 +39,9 @@ public class PautaController {
 		return MapperUtils.map(pautaService.criaPauta(MapperUtils.map(pautaDto, Pauta.class)), PautaDto.class);
 	}
 
+	@GetMapping
+	public List<Pauta> pautas(@PathVariable(value = "id_reuniao") Long idReuniao) {
+		Reuniao reuniao = reuniaoService.getReuniao(idReuniao);
+		return reuniao.getPautas();
+	}
 }
