@@ -3,6 +3,7 @@ package com.kleyton.gerenciador_de_pautas_api.models;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -23,9 +24,9 @@ public class Reuniao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idReuniao;
+	private Long id;
 
-	@OneToMany(mappedBy = "reuniao", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "reuniao", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Pauta> pautas;
 
 	@Temporal(TemporalType.TIMESTAMP)
