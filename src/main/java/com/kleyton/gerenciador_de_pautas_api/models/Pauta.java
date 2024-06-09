@@ -3,7 +3,6 @@ package com.kleyton.gerenciador_de_pautas_api.models;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -27,21 +26,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "PAUTAS", uniqueConstraints = @UniqueConstraint(columnNames = { "idReuniao", "idPauta" }))
+@Table(name = "PAUTAS", uniqueConstraints = @UniqueConstraint(columnNames = { "idReuniao", "id" }))
 public class Pauta {
-
-	@JsonCreator
-	public Pauta(String descricao) {
-		this.descricao = descricao;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idPauta;
+	private Long id;
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idReuniao", referencedColumnName = "idReuniao", nullable = false)
+	@JoinColumn(name = "idReuniao", referencedColumnName = "id", nullable = false)
 	private Reuniao reuniao;
 
 	@OneToMany(mappedBy = "pauta")
@@ -53,10 +47,11 @@ public class Pauta {
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime inicioDeSessao;
 
-	private Integer votosFavoraveis;
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime fimDeSessao;
 
-	private Integer votosContra;
-
-	private Integer duracaoVotacaoEmMinutos;
+	public Pauta(String descricao) {
+		this.descricao = descricao;
+	}
 
 }

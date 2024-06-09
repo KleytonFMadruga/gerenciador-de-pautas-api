@@ -1,6 +1,6 @@
 package com.kleyton.gerenciador_de_pautas_api.models;
 
-import java.io.Serializable;
+import com.kleyton.gerenciador_de_pautas_api.enums.VotoEnum;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,21 +16,21 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "VOTOS", uniqueConstraints = { @UniqueConstraint(columnNames = { "idAssociado", "idPauta" }) })
-public class Voto implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@Table(name = "VOTOS", uniqueConstraints = { @UniqueConstraint(columnNames = { "id", "idPauta" }) })
+public class Voto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idVoto;
+	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "idAssociado", referencedColumnName = "idAssociado")
+	@JoinColumn(name = "idAssociado", referencedColumnName = "id")
 	private Associado associado;
 
 	@ManyToOne
-	@JoinColumn(name = "idPauta", referencedColumnName = "idPauta")
+	@JoinColumn(name = "idPauta", referencedColumnName = "id")
 	private Pauta pauta;
+
+	private VotoEnum favoravel;
 
 }

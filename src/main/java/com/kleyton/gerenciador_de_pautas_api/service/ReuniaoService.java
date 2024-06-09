@@ -8,6 +8,8 @@ public interface ReuniaoService {
 
 	Reuniao criaReuniao(Reuniao reuniao);
 
-	public List<Reuniao> listarReunioes();
+	List<Reuniao> listarReunioes();
+
+	Reuniao getReuniao(Long id);
 
 }

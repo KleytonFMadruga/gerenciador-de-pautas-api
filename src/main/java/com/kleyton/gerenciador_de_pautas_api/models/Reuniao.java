@@ -1,6 +1,7 @@
 package com.kleyton.gerenciador_de_pautas_api.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -10,16 +11,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
-@Table(name = "REUNIOES")
+@NoArgsConstructor
+@Entity(name = "REUNIOES")
 public class Reuniao {
 
 	@Id
@@ -34,13 +35,10 @@ public class Reuniao {
 
 	private String tema;
 
-	public Reuniao(LocalDateTime dataHora, String tema, List<Pauta> pautas) {
+	public Reuniao(LocalDateTime dataHora, String tema) {
 		this.dataHora = dataHora;
 		this.tema = tema;
-		this.pautas = pautas;
-	}
-
-	public Reuniao() {
+		this.pautas = new ArrayList<Pauta>();
 	}
 
 }
