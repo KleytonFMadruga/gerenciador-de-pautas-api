@@ -16,11 +16,7 @@ public class PautaServiceImplement implements PautaService {
 
 	@Override
 	public Pauta criaPauta(Pauta pauta) {
-
 		return pautaRepository.save(pauta);
-
 	}
-
-	// = LocalDateTime.now().plusMinutes(0);
 
 }

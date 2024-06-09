@@ -2,6 +2,7 @@ package com.kleyton.gerenciador_de_pautas_api.controllers;
 
 import java.util.List;
 
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,5 +44,15 @@ public class PautaController {
 	public List<Pauta> pautas(@PathVariable(value = "id_reuniao") Long idReuniao) {
 		Reuniao reuniao = reuniaoService.getReuniao(idReuniao);
 		return reuniao.getPautas();
+	}
+
+	@GetMapping(value = "/{id_pauta}")
+	public Pauta exibePauta(@PathVariable(value = "id_reuniao") Long idReuniao,
+			@PathVariable(value = "id_pauta") Long idPauta) {
+		Reuniao reuniao = reuniaoService.getReuniao(idReuniao);
+		Pauta pauta = reuniao.getPautas().stream().filter(p -> p.getId().equals(idPauta)).findFirst()
+				.orElseThrow(() -> new ResourceNotFoundException("Pauta inexistente " + idPauta));
+
+		return pauta;
 	}
 }
