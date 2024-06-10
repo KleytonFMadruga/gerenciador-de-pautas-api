@@ -1,16 +1,11 @@
 package com.kleyton.gerenciador_de_pautas_api.service.serviceImplemt;
 
-import static com.kleyton.gerenciador_de_pautas_api.enums.VotoEnum.NAO;
-import static com.kleyton.gerenciador_de_pautas_api.enums.VotoEnum.SIM;
-
 import java.time.LocalDateTime;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.kleyton.gerenciador_de_pautas_api.enums.VotoEnum;
+import com.kleyton.gerenciador_de_pautas_api.dto.VotoDto;
 import com.kleyton.gerenciador_de_pautas_api.models.Associado;
 import com.kleyton.gerenciador_de_pautas_api.models.Pauta;
 import com.kleyton.gerenciador_de_pautas_api.models.Voto;
@@ -26,22 +21,16 @@ public class VotoServiceImplement implements VotoService {
 	private final VotoRepository votoRepository;
 
 	@Override
-	public ResponseEntity<String> votarPauta(Associado associado, Pauta pauta, String voto) throws VotoException {
+	public ResponseEntity<String> votarPauta(Associado associado, Pauta pauta, VotoDto votoDto) throws VotoException {
 
 		if (pauta.getFimDeSessao().isBefore(LocalDateTime.now())) {
 			throw new VotoException("Tempo de sessão expirado!");
 		}
 
-		VotoEnum votoEnum = null;
-		if (extrairPalavra(voto).equals("SIM")) {
-			votoEnum = SIM;
-		} else if (extrairPalavra(voto).equals("NAO")) {
-			votoEnum = NAO;
-		}
 		Voto NovoVoto = new Voto();
 		NovoVoto.setAssociado(associado);
 		NovoVoto.setPauta(pauta);
-		NovoVoto.setFavoravel(votoEnum);
+		NovoVoto.setFavoravel(votoDto.getValor());
 
 		votoRepository.save(NovoVoto);
 
@@ -56,12 +45,4 @@ public class VotoServiceImplement implements VotoService {
 		}
 	}
 
-	public static String extrairPalavra(String input) {
-		Pattern pattern = Pattern.compile("\\{voto=(.*?)\\}");
-		Matcher matcher = pattern.matcher(input);
-		if (matcher.find()) {
-			return matcher.group(1);
-		}
-		return "";
-	}
 }

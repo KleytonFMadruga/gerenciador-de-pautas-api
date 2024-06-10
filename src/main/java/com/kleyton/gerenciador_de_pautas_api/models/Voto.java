@@ -1,5 +1,6 @@
 package com.kleyton.gerenciador_de_pautas_api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kleyton.gerenciador_de_pautas_api.enums.VotoEnum;
 
 import jakarta.persistence.Column;
@@ -26,10 +27,12 @@ public class Voto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "idAssociado", unique = true, referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "idAssociado", referencedColumnName = "id", nullable = false)
 	private Associado associado;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "idPauta", referencedColumnName = "id", nullable = false)
 	private Pauta pauta;
