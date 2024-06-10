@@ -1,9 +1,11 @@
 package com.kleyton.gerenciador_de_pautas_api.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,5 +56,16 @@ public class PautaController {
 				.orElseThrow(() -> new ResourceNotFoundException("Pauta inexistente " + idPauta));
 
 		return pauta;
+	}
+
+	@PostMapping(value = "/{id_pauta}/sessao_de_votacao")
+	public ResponseEntity<String> abreSessaoDeVotacao(@PathVariable(value = "id_pauta") Long idPauta,
+			@RequestBody Map<String, Object> body) throws Exception {
+
+		Long tempoDuracaoMin = Long.parseLong(body.get("tempoDuracaoMin").toString());
+
+		pautaService.abreSessaoDeVotacao(idPauta, tempoDuracaoMin);
+
+		return ResponseEntity.ok("Sessão liberada para votação");
 	}
 }

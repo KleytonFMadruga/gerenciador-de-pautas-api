@@ -6,4 +6,6 @@ public interface PautaService {
 
 	Pauta criaPauta(Pauta pauta);
 
+	void abreSessaoDeVotacao(Long idPauta, Long tempoDeSessaoEmMin) throws Exception;
+
 }
