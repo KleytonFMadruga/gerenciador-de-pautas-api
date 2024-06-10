@@ -6,4 +6,6 @@ public interface AssociadoService {
 
 	Associado cadastraAssociado(Associado associado);
 
+	Associado getAssociado(Long id);
+
 }

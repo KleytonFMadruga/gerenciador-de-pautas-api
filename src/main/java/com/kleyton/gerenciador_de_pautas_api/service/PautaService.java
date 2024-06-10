@@ -8,4 +8,6 @@ public interface PautaService {
 
 	void abreSessaoDeVotacao(Long idPauta, Long tempoDeSessaoEmMin) throws Exception;
 
+	Pauta getPauta(Long id);
+
 }

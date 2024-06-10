@@ -1,5 +1,7 @@
 package com.kleyton.gerenciador_de_pautas_api.service.serviceImplemt;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.kleyton.gerenciador_de_pautas_api.models.Associado;
@@ -17,6 +19,13 @@ public class AssociadoServiceImplement implements AssociadoService {
 	@Override
 	public Associado cadastraAssociado(Associado associado) {
 		return associadoRepository.save(associado);
+
+	}
+
+	@Override
+	public Associado getAssociado(Long id) {
+		Optional<Associado> associadoOpt = associadoRepository.findById(id);
+		return associadoOpt.orElse(null);
 
 	}
 

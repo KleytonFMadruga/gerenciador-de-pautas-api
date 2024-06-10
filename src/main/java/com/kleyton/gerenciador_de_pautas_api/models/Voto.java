@@ -2,7 +2,10 @@ package com.kleyton.gerenciador_de_pautas_api.models;
 
 import com.kleyton.gerenciador_de_pautas_api.enums.VotoEnum;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,13 +27,15 @@ public class Voto {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "idAssociado", referencedColumnName = "id")
+	@JoinColumn(name = "idAssociado", unique = true, referencedColumnName = "id", nullable = false)
 	private Associado associado;
 
 	@ManyToOne
-	@JoinColumn(name = "idPauta", referencedColumnName = "id")
+	@JoinColumn(name = "idPauta", referencedColumnName = "id", nullable = false)
 	private Pauta pauta;
 
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private VotoEnum favoravel;
 
 }

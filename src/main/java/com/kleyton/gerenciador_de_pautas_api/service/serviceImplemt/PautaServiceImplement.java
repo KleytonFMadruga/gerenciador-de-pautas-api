@@ -48,4 +48,10 @@ public class PautaServiceImplement implements PautaService {
 		}
 	}
 
+	@Override
+	public Pauta getPauta(Long id) {
+		Optional<Pauta> pautaOpt = pautaRepository.findById(id);
+		return pautaOpt.orElse(null);
+	}
+
 }
