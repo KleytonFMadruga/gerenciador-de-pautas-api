@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+    db:
+        image: postgres:14
+        container_name: postgres
+        ports:
+            - 15432:5432
+        volumes:
+            - pg-gerenciador-pautas:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_PASSWORD=123mudar
+            - POSTGRES_USER=postgres
+            - POSTGRES_DB=gerenciador_de_pautas_api
+        networks:
+            - pautas-bridge
+
+    api:
+        image: kleytonmadruga/gerenciador_de_pautas:1.0.0
+        container_name: api-gerenciador-pautas
+        environment:
+            - DB_URL=jdbc:postgresql://db:5432/gerenciador_de_pautas_api
+            - DB_USER=postgres
+            - DB_PASSWD=123mudar
+            - DDL_AUTO=update
+        networks:
+            - pautas-bridge
+        ports:
+            - 8080:8080
+        depends_on:
+            - db
+
+networks:
+    pautas-bridge:
+        driver: bridge
+
+volumes:
+    pg-gerenciador-pautas:
