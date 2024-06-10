@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(value = "/reunioes/{id_reuniao}/pautas")
+@RequestMapping(value = "/")
 @RequiredArgsConstructor
 public class PautaController {
 
@@ -33,7 +33,7 @@ public class PautaController {
 
 	private final ReuniaoService reuniaoService;
 
-	@PostMapping
+	@PostMapping(value = "reunioes/{id_reuniao}/pautas")
 	@ResponseStatus(HttpStatus.CREATED)
 	public PautaDto salvaPauta(@RequestBody @Valid PautaDto pautaDto,
 			@PathVariable(value = "id_reuniao") Long idReuniao) {
@@ -42,13 +42,13 @@ public class PautaController {
 		return MapperUtils.map(pautaService.criaPauta(MapperUtils.map(pautaDto, Pauta.class)), PautaDto.class);
 	}
 
-	@GetMapping
+	@GetMapping(value = "reunioes/{id_reuniao}/pautas")
 	public List<Pauta> pautas(@PathVariable(value = "id_reuniao") Long idReuniao) {
 		Reuniao reuniao = reuniaoService.getReuniao(idReuniao);
 		return reuniao.getPautas();
 	}
 
-	@GetMapping(value = "/{id_pauta}")
+	@GetMapping(value = "reunioes/{id_reuniao}/pautas/{id_pauta}")
 	public Pauta exibePauta(@PathVariable(value = "id_reuniao") Long idReuniao,
 			@PathVariable(value = "id_pauta") Long idPauta) {
 		Reuniao reuniao = reuniaoService.getReuniao(idReuniao);
@@ -58,7 +58,7 @@ public class PautaController {
 		return pauta;
 	}
 
-	@PostMapping(value = "/{id_pauta}/sessao_de_votacao")
+	@PostMapping(value = "pautas/{id_pauta}/sessao_de_votacao")
 	public ResponseEntity<String> abreSessaoDeVotacao(@PathVariable(value = "id_pauta") Long idPauta,
 			@RequestBody Map<String, Object> body) throws Exception {
 
@@ -67,5 +67,10 @@ public class PautaController {
 		pautaService.abreSessaoDeVotacao(idPauta, tempoDuracaoMin);
 
 		return ResponseEntity.ok("Sessão liberada para votação");
+	}
+
+	@GetMapping(value = "pautas/{id_pauta}/votos_apurados")
+	public String votosApurados(@PathVariable(value = "id_pauta") Long idPauta) {
+		return pautaService.contagemDeVotos(idPauta);
 	}
 }

@@ -10,4 +10,6 @@ public interface PautaService {
 
 	Pauta getPauta(Long id);
 
+	String contagemDeVotos(Long idPauta);
+
 }

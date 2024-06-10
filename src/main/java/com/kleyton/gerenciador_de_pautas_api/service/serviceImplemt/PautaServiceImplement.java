@@ -1,11 +1,14 @@
 package com.kleyton.gerenciador_de_pautas_api.service.serviceImplemt;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.kleyton.gerenciador_de_pautas_api.enums.VotoEnum;
 import com.kleyton.gerenciador_de_pautas_api.models.Pauta;
+import com.kleyton.gerenciador_de_pautas_api.models.Voto;
 import com.kleyton.gerenciador_de_pautas_api.repositories.PautaRepository;
 import com.kleyton.gerenciador_de_pautas_api.service.PautaService;
 
@@ -52,6 +55,28 @@ public class PautaServiceImplement implements PautaService {
 	public Pauta getPauta(Long id) {
 		Optional<Pauta> pautaOpt = pautaRepository.findById(id);
 		return pautaOpt.orElse(null);
+	}
+
+	@Override
+	public String contagemDeVotos(Long idPauta) {
+		Optional<Pauta> pautaOpt = pautaRepository.findById(idPauta);
+		Pauta pauta = pautaOpt.orElse(null);
+		List<Voto> votos = pauta.getVotos();
+
+		int contagemSim = 0;
+		int contagemNao = 0;
+
+		for (Voto voto : votos) {
+			if (voto.getFavoravel() == VotoEnum.SIM) {
+				contagemSim++;
+			} else if (voto.getFavoravel() == VotoEnum.NAO) {
+				contagemNao++;
+			}
+
+		}
+		String resultado = "Para a pauta " + idPauta + " foram totalizados " + votos.size() + " votos. Sendo, "
+				+ contagemSim + " Votos SIM, e " + contagemNao + " votos NÃO.";
+		return resultado;
 	}
 
 }

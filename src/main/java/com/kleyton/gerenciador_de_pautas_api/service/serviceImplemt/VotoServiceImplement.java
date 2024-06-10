@@ -35,8 +35,7 @@ public class VotoServiceImplement implements VotoService {
 		VotoEnum votoEnum = null;
 		if (extrairPalavra(voto).equals("SIM")) {
 			votoEnum = SIM;
-		}
-		if (extrairPalavra(voto).equals("NAO")) {
+		} else if (extrairPalavra(voto).equals("NAO")) {
 			votoEnum = NAO;
 		}
 		Voto NovoVoto = new Voto();
